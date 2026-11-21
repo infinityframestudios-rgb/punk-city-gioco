@@ -3,87 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#160810">
+<meta name="theme-color" content="#05010a">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Punk City — Le Fogne</title>
+<title>Punk City</title>
 <style>
-:root{--rosa:#ff4f9a;--oro:#ffd27a;--ciano:#7ef0ff;--inchiostro:#14080f}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{margin:0;height:100%;background:#070308;color:#f6e9ef;font-family:"Trebuchet MS",Verdana,sans-serif;overflow:hidden;touch-action:none;user-select:none}
-canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
-#ui{position:fixed;inset:0;pointer-events:none}
-#ui button,#ui .pannello,#titolo,#dialogo,#pausa,#battaglia,#fine{pointer-events:auto}
-button{font:inherit;color:inherit;cursor:pointer}
-#hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:8px;padding:max(8px,env(safe-area-inset-top)) 12px 0;pointer-events:none}
-.pill{background:#14080fcc;border:1px solid #ff4f9a66;border-radius:999px;padding:6px 12px;font-size:13px}
-#pausaBtn{pointer-events:auto;background:#14080fcc;border:1px solid var(--oro);color:var(--oro);border-radius:999px;padding:8px 14px;font-weight:700}
-#titolo,#fine{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#3a1028 0%,#070308 68%);text-align:center;padding:24px}
-h1{font-size:clamp(42px,8vw,92px);margin:0;letter-spacing:.08em;color:var(--rosa);text-shadow:0 0 18px #ff4f9a}
-.sotto{color:var(--ciano);letter-spacing:.22em;font-size:13px;margin:8px 0 28px}
-.riga{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-button.grosso{min-width:220px;min-height:52px;border-radius:14px;border:2px solid var(--ciano);background:#120814;color:#fff;font-weight:700;font-size:18px}
-button.grosso.oro{border-color:var(--oro);color:var(--oro)}
-button.grosso:disabled{opacity:.35}
-#dialogo{position:absolute;left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));background:#120810f2;border:2px solid var(--rosa);border-radius:18px;padding:14px 16px 16px;min-height:112px}
-#chi{color:var(--oro);font-size:13px;letter-spacing:.14em}
-#testo{font-size:18px;line-height:1.35;margin-top:6px}
-#scelte{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-#scelte button,.menu button,#oggetti button{min-height:44px;border-radius:12px;border:1px solid var(--ciano);background:#1b0c16;padding:8px 12px}
-#joy{position:absolute;left:max(16px,env(safe-area-inset-left));bottom:max(18px,env(safe-area-inset-bottom));width:118px;height:118px;border-radius:50%;border:2px solid #ffffff33;background:#00000044}
-#joy i{position:absolute;left:39px;top:39px;width:40px;height:40px;border-radius:50%;background:var(--rosa);display:block}
-#azione{position:absolute;right:max(16px,env(safe-area-inset-right));bottom:max(28px,env(safe-area-inset-bottom));width:84px;height:84px;border-radius:50%;border:2px solid var(--oro);background:#2a1408ee;color:var(--oro);font-weight:700}
-#pausa,#battaglia{position:absolute;inset:0;background:#070308e6;display:flex;align-items:center;justify-content:center;padding:16px}
-.pannello{width:min(860px,100%);background:#140810;border:2px solid var(--rosa);border-radius:20px;padding:16px}
-.pannello h2{margin:0 0 8px;color:var(--rosa)}
-.schede{display:flex;gap:8px;margin-bottom:10px}
-.schede button{border-radius:999px;border:1px solid #ffffff33;background:transparent;padding:8px 12px}
-.schede button.on{border-color:var(--oro);color:var(--oro)}
-#battaglia .griglia{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.chi{border:1px solid #ffffff22;border-radius:12px;padding:8px}
-.barra{height:8px;background:#2a1520;border-radius:99px;overflow:hidden;margin-top:4px}
-.barra span{display:block;height:100%;background:var(--rosa)}
-#log{min-height:22px;color:var(--ciano);font-size:14px;margin:8px 0}
-#gira{display:none;position:fixed;inset:0;z-index:9;background:#070308;color:var(--rosa);align-items:center;justify-content:center;text-align:center;padding:24px;font-size:22px;font-weight:700}
-@media (orientation:portrait) and (max-width:900px){#gira{display:flex}}
-.nascosto{display:none!important}
+html,body{margin:0;height:100%;background:#05010a;font-family:"Trebuchet MS",Arial,sans-serif;color:#fff;overflow:hidden}
+body{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;background:radial-gradient(circle at 50% 45%,#2a0838 0%,#05010a 75%)}
+.t1{font:900 110px/1 "Trebuchet MS",sans-serif;color:#ff2fb3;text-shadow:0 0 30px #ff2fb3,0 6px 0 #000;margin:0;letter-spacing:.04em}
+.t2{font:bold 30px "Trebuchet MS",sans-serif;color:#00f0ff;letter-spacing:4px;margin:10px 0 0}
+.t3{margin:18px 0 0;font:bold 20px "Trebuchet MS",sans-serif;color:#ffd34d;max-width:900px;text-shadow:0 2px 0 #000}
+.riga{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:40px}
+a{text-decoration:none}
+button,a.grosso{display:inline-block;min-width:220px;min-height:56px;line-height:32px;font:bold 25px "Trebuchet MS",sans-serif;color:#fff;background:#1a0630;border:3px solid #00f0ff;border-radius:12px;padding:12px 22px;box-shadow:0 0 14px #00f0ff88;cursor:pointer}
+a.rosa{border-color:#ff2fb3;background:#4a0838;box-shadow:0 0 14px #ff2fb366}
+a.oro{border-color:#ffd34d;color:#ffd34d;box-shadow:0 0 14px #ffd34d66}
+.second{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.second a{min-width:180px;min-height:48px;font-size:18px;box-shadow:none;opacity:.95}
+small{display:block;margin-top:28px;color:#9fdcff;font-size:16px}
+@media (max-width:900px){.t1{font-size:clamp(56px,16vw,110px)}.t2{font-size:clamp(16px,4vw,30px)}}
 </style>
 </head>
 <body>
-<canvas id="c"></canvas>
-<div id="ui">
-  <div id="hud" class="nascosto"><div class="pill" id="luogo"></div><div class="pill" id="risorse"></div><button id="pausaBtn" type="button">Pausa</button></div>
-  <div id="titolo">
-    <h1>PUNK CITY</h1>
-    <div class="sotto">CAPITOLO 1 · LE FOGNE</div>
-    <div class="riga">
-      <button class="grosso" id="nuova" type="button">Nuova partita</button>
-      <button class="grosso oro" id="continua" type="button">Continua</button>
-    </div>
-    <p id="notaSalva" style="color:#b9a0aa;font-size:13px"></p>
-  </div>
-  <div id="dialogo" class="nascosto"><div id="chi"></div><div id="testo"></div><div id="scelte"></div></div>
-  <div id="joy" class="nascosto"><i id="pomello"></i></div>
-  <button id="azione" class="nascosto" type="button">Parla</button>
-  <div id="pausa" class="nascosto"><div class="pannello">
-    <h2>Pausa</h2>
-    <div class="schede" id="schedePausa"></div>
-    <div id="corpoPausa"></div>
-    <div class="riga" style="margin-top:12px"><button class="grosso" id="chiudiPausa" type="button">Riprendi</button></div>
-  </div></div>
-  <div id="battaglia" class="nascosto"><div class="pannello">
-    <h2 id="batTitolo">Scontro</h2>
-    <div class="griglia"><div id="batEroi"></div><div id="batNemici"></div></div>
-    <div id="log"></div>
-    <div class="riga" id="batComandi"></div>
-  </div></div>
-  <div id="fine" class="nascosto">
-    <h1 style="font-size:clamp(32px,6vw,64px)">Le Fogne</h1>
-    <p id="fineTesto" style="max-width:640px;font-size:18px"></p>
-    <button class="grosso oro" id="tornaTitolo" type="button">Torna al titolo</button>
-  </div>
+<div class="t1">PUNK CITY</div>
+<div class="t2">CAPITOLO 1 · LE FOGNE</div>
+<div class="t3">«In questa città il sangue si paga a rate. Io sono venuto a riscuotere.» — Ras</div>
+<div class="riga">
+  <a class="grosso rosa" href="fogne/">▶ Gioca il capitolo</a>
 </div>
-<div id="gira">Gira il telefono in orizzontale<br>per entrare nelle Fogne</div>
-<script type="module" src="./gioco.js"></script>
+<div class="second">
+  <a class="grosso" href="stanza/">Il Covo</a>
+  <a class="grosso oro" href="battaglia/">Battaglia 3D</a>
+</div>
+<small>Stile Final Fantasy IX · personaggi 3D · menu e colori originali</small>
 </body>
 </html>
