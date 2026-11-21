@@ -1,7 +1,7 @@
 // PUNK CITY – Stanza di prova "Il Covo": sfondo dipinto + personaggio 3D low-poly (Three.js),
 // area calpestabile invisibile, maschere di occlusione, '!' e dialoghi JRPG, musica WebAudio.
-import * as THREE from '../lib/three.module.min.js?v=8';
-import {makeRas as mkRas,makeKiri as mkKiri,makeDrone as mkDrone,makeRatto as mkRatto} from '../lib/pc-models.js?v=8';
+import * as THREE from '../lib/three.module.min.js';
+import {makeRas as mkRas,makeKiri as mkKiri,makeDrone as mkDrone,makeRatto as mkRatto} from '../lib/pc-models.js';
 const V='8',W=1280,H=720,$=id=>document.getElementById(id);
 const ASSET=n=>'assets/'+n+'?v='+V;
 
