@@ -36,19 +36,19 @@ const FABB = {
 };
 
 const STANZE = {
-  infermeria: { nome: 'Clinica clandestina', w: 7, d: 6, pav: 0x3a2a34, neon: 0x5ef0d0, spawn: [0, 1.6],
+  infermeria: { nome: 'Clinica clandestina', w: 7, d: 6, pav: 0x8a6a72, muro: 0x6d5560, aria: 0x4a343c, neon: 0x7ef6d8, caldo: 0xffc48a, spawn: [0, 1.6],
     gente: [['medico', 1.2, -1.2, -0.4]],
     porte: [[3.1, 0, 'mercato', 'Mercato']] },
-  mercato: { nome: 'Mercato sotto il ponte', w: 11, d: 8, pav: 0x4a3038, neon: 0xff4f9a, spawn: [-3.2, 1.6],
+  mercato: { nome: 'Mercato sotto il ponte', w: 11, d: 8, pav: 0x9a5c64, muro: 0x724650, aria: 0x5a3038, neon: 0xff5fa8, caldo: 0xffb060, spawn: [-3.2, 1.6],
     gente: [['teo', -1.6, -2.2, 0.5], ['fabbro', 0.2, -2.3, 0.4], ['lavandaia', 2.2, -1.8, -0.6], ['ragazzo', 3.2, 0.2, 2.2], ['vecchio', -3.2, -0.4, 1.2], ['esattore', 1.2, 1.4, 3]],
     porte: [[-4.8, 0, 'infermeria', 'Clinica'], [4.6, 0, 'rifugio', 'Cisterna', 'dettoVoci'], [0, -3.4, 'sala', 'Chiatta', 'mattina']] },
-  rifugio: { nome: 'Cisterna vuota', w: 6, d: 6, pav: 0x241820, neon: 0x7ef0ff, spawn: [0, 1.6],
+  rifugio: { nome: 'Cisterna vuota', w: 6, d: 6, pav: 0x6e5664, muro: 0x584450, aria: 0x3e3038, neon: 0x8ef6ff, caldo: 0xffd0a8, spawn: [0, 1.6],
     gente: [['kiri', 0, -1.2, 0.4]],
     porte: [[0, 2.5, 'mercato', 'Mercato'], [2.5, 0, 'pozzo', 'Il Pozzo', 'kiriCisterna']] },
-  pozzo: { nome: 'Il Pozzo', w: 8, d: 8, pav: 0x1c1410, neon: 0xffd27a, spawn: [0, 2.4],
+  pozzo: { nome: 'Il Pozzo', w: 8, d: 8, pav: 0x8a6244, muro: 0x6a4c34, aria: 0x4a3424, neon: 0xffd98a, caldo: 0xffe0b0, spawn: [0, 2.4],
     gente: [['sordo', 0, -1.3, 0.2]],
     porte: [[0, 3.4, 'rifugio', 'Cisterna'], [3.4, 0, 'sala', 'Chiatta di Gorm', 'registro']] },
-  sala: { nome: 'Chiatta di Re Gorm', w: 8, d: 8, pav: 0x2a1018, neon: 0xff2040, spawn: [0, 2.4],
+  sala: { nome: 'Chiatta di Re Gorm', w: 8, d: 8, pav: 0x7a3e48, muro: 0x5e323c, aria: 0x421820, neon: 0xff4d6a, caldo: 0xffb070, spawn: [0, 2.4],
     gente: [], boss: true,
     porte: [[-3.4, 0, 'pozzo', 'Pozzo'], [0, 3.4, 'mercato', 'Mercato', 'mattina'], [0, -3.2, 'cortile', 'Rust Alley', 'uomini'], [3.4, 0, 'galleria', 'Mercato Nero', 'cap2']] },
   cortile: { nome: 'Rust Alley, cortile', w: 8, d: 8, pav: 0x3a2418, neon: 0xff8844, spawn: [0, 2.4],
@@ -66,14 +66,14 @@ const STANZE = {
   tetti: { nome: 'Tetti di Rust Alley', w: 8, d: 10, pav: 0x1a2030, neon: 0x66ccff, spawn: [0, 3.2],
     gente: [['zero', 0, -2.4, 0.2], ['kiri', -2.2, 1.4, 1]],
     porte: [[0, 4.2, 'magazzino', 'Magazzino'], [0, -4.2, 'sala', 'Chiatta', 'zeroFatto'], [3.4, 0, 'galleria', 'Mercato Nero', 'cap2']] },
-  galleria: { nome: 'Mercato Nero, galleria', w: 9, d: 7, pav: 0x1a1428, neon: 0x9b6bff, spawn: [0, 2.2],
+  galleria: { nome: 'Mercato Nero, galleria', w: 9, d: 7, pav: 0x6e4e86, muro: 0x523e68, aria: 0x382848, neon: 0xd090ff, caldo: 0xffb48a, spawn: [0, 2.2],
     gente: [['vex', 0, -1.4, 0.2], ['kiri', -1.6, 1.2, 0.8], ['brick', 1.5, 1.1, -0.4]],
     porte: [[0, 3.1, 'tetti', 'Tetti'], [0, -3.1, 'piazza', 'Piazza delle aste', 'patto']] },
-  piazza: { nome: 'Piazza delle aste', w: 8, d: 8, pav: 0x221828, neon: 0xffd27a, spawn: [0, 2.4],
+  piazza: { nome: 'Piazza delle aste', w: 8, d: 8, pav: 0x8a5460, muro: 0x624048, aria: 0x4a3038, neon: 0xffd98a, caldo: 0xffc070, spawn: [0, 2.4],
     gente: [['banditore', 0, -1.3, 0.2]],
     porte: [[0, 3.4, 'galleria', 'Galleria'], [0, -3.3, 'caveau', 'Caveau', 'treChiavi']],
     codice: [2.4, 0.4] },
-  caveau: { nome: 'Caveau', w: 8, d: 8, pav: 0x100818, neon: 0x7ef0ff, spawn: [0, 2.4],
+  caveau: { nome: 'Caveau', w: 8, d: 8, pav: 0x52426e, muro: 0x3e3458, aria: 0x2c2440, neon: 0x9af0ff, caldo: 0xffe0a8, spawn: [0, 2.4],
     gente: [['mercante', 0, -1.8, 0.2]],
     porte: [[0, 3.4, 'piazza', 'Piazza']] },
 };
@@ -202,18 +202,33 @@ function tubo(x, z) {
 function costruisci(id) {
   const st = STANZE[id];
   svuota();
-  scena.fog.color.setHex(st.pav);
-  renderer.setClearColor(st.pav);
+  const aria = st.aria || st.pav;
+  scena.fog.color.setHex(aria);
+  scena.fog.near = st.aria ? 12 : 8;
+  scena.fog.far = st.aria ? 32 : 22;
+  renderer.setClearColor(aria);
+  const muro = st.muro || 0x2c2230;
   box(st.w, 0.2, st.d, st.pav, 0, -0.1, 0);
-  box(st.w, 1.6, 0.2, 0x2c2230, 0, 0.8, -st.d / 2);
-  box(st.w, 1.6, 0.2, 0x2c2230, 0, 0.8, st.d / 2);
-  box(0.2, 1.6, st.d, 0x2c2230, -st.w / 2, 0.8, 0);
-  box(0.2, 1.6, st.d, 0x2c2230, st.w / 2, 0.8, 0);
-  const neon = new THREE.Mesh(new THREE.BoxGeometry(st.w * 0.7, 0.06, 0.06), new THREE.MeshBasicMaterial({ color: st.neon }));
-  neon.position.set(0, 1.7, -st.d / 2 + 0.16);
+  box(st.w, 1.6, 0.2, muro, 0, 0.8, -st.d / 2);
+  box(st.w, 1.6, 0.2, muro, 0, 0.8, st.d / 2);
+  box(0.2, 1.6, st.d, muro, -st.w / 2, 0.8, 0);
+  box(0.2, 1.6, st.d, muro, st.w / 2, 0.8, 0);
+  const neonMat = new THREE.MeshBasicMaterial({ color: st.neon });
+  const neon = new THREE.Mesh(new THREE.BoxGeometry(st.w * 0.72, 0.07, 0.07), neonMat);
+  neon.position.set(0, 1.72, -st.d / 2 + 0.16);
   mondo.add(neon);
-  const fill = new THREE.PointLight(st.neon, 2.4, 14);
-  fill.position.set(0, 1.6, 0);
+  if (st.caldo) {
+    const lato = new THREE.Mesh(new THREE.BoxGeometry(0.07, 0.07, st.d * 0.55), new THREE.MeshBasicMaterial({ color: st.caldo }));
+    lato.position.set(-st.w / 2 + 0.16, 1.45, 0);
+    mondo.add(lato);
+    const pozza = box(1.7, 0.04, 1.5, st.caldo, -st.w * 0.22, 0.02, 0.15);
+    pozza.material = new THREE.MeshBasicMaterial({ color: st.caldo });
+    const lampada = new THREE.PointLight(st.caldo, 3.2, 11);
+    lampada.position.set(-st.w * 0.22, 1.5, 0.15);
+    mondo.add(lampada);
+  }
+  const fill = new THREE.PointLight(st.neon, st.caldo ? 5.5 : 2.4, st.caldo ? 20 : 14);
+  fill.position.set(0.4, 1.7, -0.4);
   mondo.add(fill);
   tubo(st.w / 2 - 0.4, -1);
   const rasFab = S.flag.braccio ? () => makeRas({ sword: 'back' }) : FABB.rasFerito;
@@ -1412,5 +1427,18 @@ function bind() {
 
 init3d();
 bind();
+const anteprima = new URLSearchParams(location.search).get('anteprima');
+if (anteprima && STANZE[anteprima]) {
+  S = base();
+  S.prologo = true;
+  S.flag.braccio = true;
+  S.flag.cap2 = true;
+  S.flag.patto = true;
+  modo = 'gioco';
+  $('titolo').classList.add('nascosto');
+  $('hud').classList.remove('nascosto');
+  $('joy').classList.remove('nascosto');
+  costruisci(anteprima);
+}
 cam.position.set(0.2, 1.35, 2.55);
 requestAnimationFrame(loop);
