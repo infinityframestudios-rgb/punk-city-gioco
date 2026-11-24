@@ -1,5 +1,5 @@
 import * as THREE from '../lib/three.module.min.js';
-import { makeRas, makeKiri, makeLyra, makeSable, makeMedico, makeZero, makeGorm, makeBrick, makeRatto, makeCittadino, anima } from '../lib/pc-models.js?v=10';
+import { makeRas, makeKiri, makeLyra, makeSable, makeMedico, makeZero, makeGorm, makeBrick, makeRatto, makeCittadino, anima } from '../lib/pc-models.js?v=11';
 
 const CHIAVE = 'punkcity-cap1-v2';
 const CHIAVE_OLD = 'punkcity-cap1-v1';

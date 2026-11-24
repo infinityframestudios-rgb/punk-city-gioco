@@ -1,6 +1,6 @@
 // PUNK CITY – Battaglia 3D (prototipo). Arena in Three.js nel Vicolo Neon, telecamera cinematografica,
 // ATB in modalità "attesa", Ras e Kiri contro Ratti di Ferro e Drone Vespa. Tutto originale.
-import {THREE,makeRas,makeKiri,makeRatto,makeDrone,makeGorm,makeCittadino,flash,setOpacity,PI} from '../lib/pc-models.js?v=10';
+import {THREE,makeRas,makeKiri,makeRatto,makeDrone,makeGorm,makeCittadino,flash,setOpacity,PI} from '../lib/pc-models.js?v=11';
 import {Reflector} from '../lib/Reflector.js?v=6';
 const V='7',W=1280,H=720,$=id=>document.getElementById(id),V3=THREE.Vector3;
 const rnd=(a,b)=>a+Math.random()*(b-a),pick=a=>a[Math.floor(Math.random()*a.length)],lerp=(a,b,t)=>a+(b-a)*t,clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
