@@ -204,6 +204,45 @@ function init3d() {
   });
 }
 
+function schienaTex() {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 440;
+  const g = c.getContext('2d');
+  g.clearRect(0, 0, 256, 440);
+  g.fillStyle = '#100e14';
+  g.beginPath(); g.ellipse(128, 48, 34, 40, 0, 0, Math.PI * 2); g.fill();
+  g.fillStyle = '#c41830'; g.fillRect(150, 22, 10, 48);
+  g.fillStyle = '#16121c';
+  g.beginPath(); g.moveTo(128, 70); g.lineTo(78, 100); g.lineTo(52, 390); g.lineTo(204, 390); g.lineTo(178, 100); g.closePath(); g.fill();
+  g.strokeStyle = '#c24b66'; g.lineWidth = 7; g.stroke();
+  g.strokeStyle = '#ff2848'; g.lineWidth = 5;
+  g.beginPath(); g.moveTo(168, 340); g.lineTo(210, 70); g.stroke();
+  g.fillStyle = '#101014'; g.fillRect(78, 388, 34, 28); g.fillRect(146, 388, 34, 28);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.needsUpdate = true; return t;
+}
+let SCHIENA = null;
+function ritratto(model, url) {
+  model.traverse((o) => { if (o.isMesh) o.visible = false; });
+  const tex = new THREE.TextureLoader().load(url);
+  tex.colorSpace = THREE.SRGBColorSpace;
+  if (!SCHIENA) SCHIENA = schienaTex();
+  const mat = new THREE.MeshBasicMaterial({ map: tex, transparent: true, alphaTest: 0.25, side: THREE.DoubleSide });
+  const card = new THREE.Mesh(new THREE.PlaneGeometry(0.95, 1.28), mat);
+  card.position.y = 0.64;
+  card.userData.front = tex;
+  card.userData.back = SCHIENA;
+  model.add(card);
+  model.userData.card = card;
+  model.userData.freeze = true;
+}
+function guarda(a) {
+  const card = a.m.userData.inner && a.m.userData.inner.userData.card;
+  if (!card) { if (a.m.userData.yaw) a.m.userData.yaw.rotation.y = a.yaw; return; }
+  const s = Math.sin(a.yaw), c = Math.cos(a.yaw);
+  a.m.userData.yaw.rotation.y = s * 0.4;
+  card.scale.x = (s < -0.4 ? -1 : 1);
+  const map = c < -0.35 ? card.userData.back : card.userData.front;
+  if (card.material.map !== map) { card.material.map = map; card.material.needsUpdate = true; }
+}
 function wrap(model) {
   const root = new THREE.Group(), tilt = new THREE.Group(), yaw = new THREE.Group();
   root.add(tilt); tilt.add(yaw); yaw.add(model);
@@ -283,7 +322,9 @@ function svuotaGente() {
   gente.length = 0;
 }
 function metti(id, x, y, yaw, fab) {
-  const model = wrap((fab || FAB[id])());
+  const raw = (fab || FAB[id])();
+  if (id === 'ras') ritratto(raw, '../assets/ras.png');
+  const model = wrap(raw);
   const a = actor(model, x, y, yaw || 0);
   a.id = id;
   gente.push(a);
@@ -364,7 +405,7 @@ function cammina(dt) {
   if (ras.moving) ras.step = (ras.step || 0) + moved * 0.034;
   let dy = ras.tyaw - ras.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
   ras.yaw += dy * Math.min(1, dt * 12);
-  if (ras.m.userData.yaw) ras.m.userData.yaw.rotation.y = ras.yaw;
+  guarda(ras);
   ras.mode = ras.moving ? 'walk' : 'idle';
 
   const st = ROOM[S.stanza];
@@ -648,13 +689,18 @@ function apriPausa() {
 }
 function mostraScheda(quale) {
   $('schedePausa').innerHTML = '';
-  [['squadra', 'Squadra'], ['oggetti', 'Oggetti'], ['salva', 'Salva'], ['opzioni', 'Opzioni']].forEach(([id, n]) => {
+  [['squadra', 'Squadra'], ['equip', 'Equip'], ['abilita', 'Abilità'], ['oggetti', 'Oggetti'], ['salva', 'Salva'], ['opzioni', 'Opzioni']].forEach(([id, n]) => {
     const b = document.createElement('button'); b.textContent = n; b.className = id === quale ? 'on' : '';
     b.onclick = () => mostraScheda(id); $('schedePausa').appendChild(b);
   });
   const el = $('corpoPausa');
   if (quale === 'squadra') {
     el.innerHTML = S.party.map((p) => { const s = scheda(p); return `<p><b>${s.nome}</b> · livello ${s.lv}<br>${p.hp}/${s.hpMax} PV · ${p.mp}/${s.mpMax} PM · attacco ${s.atk}</p>`; }).join('');
+  } else if (quale === 'equip') {
+    const braccio = S.flag.braccio ? 'Braccio Alba' : 'Moncone';
+    el.innerHTML = `<p><b>Ras</b><br>Arma · Spada rossa<br>Braccio · ${braccio}<br>Accessorio · nessuno</p><p>L'attacco in combattimento è ${scheda(S.party[0]).atk}. Il Braccio Alba si accende quando è montato.</p>`;
+  } else if (quale === 'abilita') {
+    el.innerHTML = `<p><b>Ras</b><br>Taglio Alba · 8 PM<br>Un fendente rosso, danno forte su un nemico.<br>Lama Rotante · 14 PM<br>Colpisce tutti i nemici.</p><p><b>Kiri</b><br>Cortocircuito · 6 PM<br>Virus Neon · 12 PM<br>Rattoppo · 8 PM, cura un alleato.</p><p>Si usano in combattimento, dal menu Tecnica.</p>`;
   } else if (quale === 'oggetti') {
     el.innerHTML = '';
     const usa = (id, label) => {
@@ -735,6 +781,12 @@ function frame(ms) {
     try {
       const inner = g.m.userData.inner || g.m;
       anima(inner, g.moving ? (g.step || 0) : tempo, g.mode || (g.moving ? 'walk' : 'idle'));
+      const card = inner.userData && inner.userData.card;
+      if (card) {
+        const w = g.moving ? Math.sin((g.step || 0) * 2) : Math.sin(tempo * 1.5);
+        card.position.y = 0.64 + (g.moving ? Math.abs(w) * 0.04 : w * 0.012);
+        card.rotation.z = g.moving ? Math.sin(g.step || 0) * 0.06 : 0;
+      }
     } catch (e) {}
     place(g);
   });
