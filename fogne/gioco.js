@@ -1,5 +1,5 @@
 import * as THREE from '../lib/three.module.min.js';
-import { makeRas, makeKiri, makeLyra, makeSable, makeMedico, makeZero, makeGorm, makeBrick, makeRatto, makeCittadino, anima } from '../lib/pc-models.js?v=12';
+import { makeRas, makeKiri, makeLyra, makeSable, makeMedico, makeZero, makeGorm, makeBrick, makeRatto, makeCittadino, anima } from '../lib/pc-models.js?v=13';
 
 const CHIAVE = 'punkcity-cap1-v2';
 const CHIAVE_OLD = 'punkcity-cap1-v1';
@@ -8,7 +8,7 @@ const W = 1280, H = 720;
 const $ = (id) => document.getElementById(id);
 const ASSET = (n) => 'assets/' + n + '?v=' + V;
 const sizeAt = (y) => 175 + (y - 330) * 0.42;
-const SPEED = 1.75;
+const SPEED = 118;
 const isTouch = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
 
 const FAB = {
@@ -344,7 +344,8 @@ function cammina(dt) {
   if (tasti.ArrowDown || tasti.s || tasti.S) z += 1;
   if (tasti.ArrowLeft || tasti.a || tasti.A) x -= 1;
   if (tasti.ArrowRight || tasti.d || tasti.D) x += 1;
-  const sp = SPEED * sizeAt(ras.y) * dt;
+  const sp = SPEED * dt;
+  const px = ras.x, py = ras.y;
   ras.moving = 0;
   if (x || z) {
     path = [];
@@ -353,12 +354,14 @@ function cammina(dt) {
     if (walk(nx, ny)) { ras.x = nx; ras.y = ny; ras.moving = 1; }
     else if (walk(nx, ras.y)) { ras.x = nx; ras.moving = 1; }
     else if (walk(ras.x, ny)) { ras.y = ny; ras.moving = 1; }
-    ras.tyaw = Math.atan2(x, -z);
+    ras.tyaw = Math.atan2(x, z);
   } else if (path.length) {
     const [tx, ty] = path[0], dx = tx - ras.x, dz = (ty - ras.y) * DEPTH, L = Math.hypot(dx, dz);
     if (L < 8) path.shift();
-    else { ras.x += dx / L * sp; ras.y += dz / L * sp / DEPTH; ras.moving = 1; ras.tyaw = Math.atan2(dx, -dz); }
+    else { ras.x += dx / L * sp; ras.y += dz / L * sp / DEPTH; ras.moving = 1; ras.tyaw = Math.atan2(dx, dz); }
   }
+  const moved = Math.hypot(ras.x - px, (ras.y - py) * DEPTH);
+  if (ras.moving) ras.step = (ras.step || 0) + moved * 0.034;
   let dy = ras.tyaw - ras.yaw; dy = Math.atan2(Math.sin(dy), Math.cos(dy));
   ras.yaw += dy * Math.min(1, dt * 12);
   if (ras.m.userData.yaw) ras.m.userData.yaw.rotation.y = ras.yaw;
@@ -731,7 +734,7 @@ function frame(ms) {
   gente.forEach((g) => {
     try {
       const inner = g.m.userData.inner || g.m;
-      anima(inner, tempo + (g.x || 0) * 0.01, g.mode || (g.moving ? 'walk' : 'idle'));
+      anima(inner, g.moving ? (g.step || 0) : tempo, g.mode || (g.moving ? 'walk' : 'idle'));
     } catch (e) {}
     place(g);
   });
